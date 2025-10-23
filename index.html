@@ -1,320 +1,569 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>✨Calculator</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --bg1: #0f172a;
-      --bg2: #0b1220;
-      --accent: #7c3aed;
-      --glass: rgba(255,255,255,0.06);
-      --glass-2: rgba(255,255,255,0.03);
-      --text: #e6eef8;
-      --muted: rgba(230,238,248,0.6);
-      --shadow: 0 10px 30px rgba(12,10,30,0.6);
-      --rate: 0.01138;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-      background: linear-gradient(180deg,var(--bg1),var(--bg2));
-      color:var(--text);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:40px;
-      overflow:hidden;
-    }
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>✨Calculator</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Poppins:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg1: #0f172a;
+        --bg2: #0b1220;
+        --accent: #7c3aed;
+        --glass: rgba(255, 255, 255, 0.06);
+        --glass-2: rgba(255, 255, 255, 0.03);
+        --text: #e6eef8;
+        --muted: rgba(230, 238, 248, 0.6);
+        --shadow: 0 10px 30px rgba(12, 10, 30, 0.6);
+        --rate: 0.01138;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial;
+        background: linear-gradient(180deg, var(--bg1), var(--bg2));
+        color: var(--text);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px;
+        overflow: hidden;
+      }
 
-    /* Morphing water blobs */
-    .blob{
-      position:absolute;
-      border-radius:50%;
-      filter:blur(80px);
-      opacity:0.4;
-      mix-blend-mode:screen;
-      animation: morphBlob 12s ease-in-out infinite alternate, moveBlob 18s ease-in-out infinite alternate, colorShift 20s ease-in-out infinite alternate;
-      transition: transform 0.3s ease;
-    }
-    .blob.b1{width:500px;height:500px;top:0;left:0;background:linear-gradient(135deg,#0bc9d6,#06b6d4);}
-    .blob.b2{width:400px;height:400px;bottom:0;right:0;background:linear-gradient(135deg,#06b6d4,#0bc9d6);}
-    .blob.b3{width:350px;height:350px;left:30%;bottom:10%;background:linear-gradient(135deg,#10b981,#3b82f6);}
+      /* Morphing water blobs */
+      .blob {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+        opacity: 0.4;
+        mix-blend-mode: screen;
+        animation: morphBlob 12s ease-in-out infinite alternate,
+          moveBlob 18s ease-in-out infinite alternate,
+          colorShift 20s ease-in-out infinite alternate;
+        transition: transform 0.3s ease;
+      }
+      .blob.b1 {
+        width: 500px;
+        height: 500px;
+        top: 0;
+        left: 0;
+        background: linear-gradient(135deg, #0bc9d6, #06b6d4);
+      }
+      .blob.b2 {
+        width: 400px;
+        height: 400px;
+        bottom: 0;
+        right: 0;
+        background: linear-gradient(135deg, #06b6d4, #0bc9d6);
+      }
+      .blob.b3 {
+        width: 350px;
+        height: 350px;
+        left: 30%;
+        bottom: 10%;
+        background: linear-gradient(135deg, #10b981, #3b82f6);
+      }
 
-    @keyframes moveBlob{
-      0% {transform: translate(0,0);}
-      25% {transform: translate(40px,-20px);}
-      50% {transform: translate(-30px,30px);}
-      75% {transform: translate(20px,-40px);}
-      100% {transform: translate(-50px,20px);}
-    }
-    @keyframes morphBlob{
-      0% {border-radius: 45% 55% 60% 40% / 50% 60% 40% 50%;}
-      25% {border-radius: 55% 45% 40% 60% / 60% 40% 50% 50%;}
-      50% {border-radius: 50% 50% 55% 45% / 50% 55% 45% 50%;}
-      75% {border-radius: 60% 40% 50% 50% / 55% 50% 60% 35%;}
-      100% {border-radius: 45% 55% 60% 40% / 50% 60% 40% 50%;}
-    }
-    @keyframes colorShift{
-      0% {background: linear-gradient(135deg,#0bc9d6,#06b6d4);}
-      25% {background: linear-gradient(135deg,#06b6d4,#0bc9d6);}
-      50% {background: linear-gradient(135deg,#10b981,#3b82f6);}
-      75% {background: linear-gradient(135deg,#3b82f6,#10b981);}
-      100% {background: linear-gradient(135deg,#0bc9d6,#06b6d4);}
-    }
+      @keyframes moveBlob {
+        0% {
+          transform: translate(0, 0);
+        }
+        25% {
+          transform: translate(40px, -20px);
+        }
+        50% {
+          transform: translate(-30px, 30px);
+        }
+        75% {
+          transform: translate(20px, -40px);
+        }
+        100% {
+          transform: translate(-50px, 20px);
+        }
+      }
+      @keyframes morphBlob {
+        0% {
+          border-radius: 45% 55% 60% 40% / 50% 60% 40% 50%;
+        }
+        25% {
+          border-radius: 55% 45% 40% 60% / 60% 40% 50% 50%;
+        }
+        50% {
+          border-radius: 50% 50% 55% 45% / 50% 55% 45% 50%;
+        }
+        75% {
+          border-radius: 60% 40% 50% 50% / 55% 50% 60% 35%;
+        }
+        100% {
+          border-radius: 45% 55% 60% 40% / 50% 60% 40% 50%;
+        }
+      }
+      @keyframes colorShift {
+        0% {
+          background: linear-gradient(135deg, #0bc9d6, #06b6d4);
+        }
+        25% {
+          background: linear-gradient(135deg, #06b6d4, #0bc9d6);
+        }
+        50% {
+          background: linear-gradient(135deg, #10b981, #3b82f6);
+        }
+        75% {
+          background: linear-gradient(135deg, #3b82f6, #10b981);
+        }
+        100% {
+          background: linear-gradient(135deg, #0bc9d6, #06b6d4);
+        }
+      }
 
-    .card{
-      position:relative;
-      width:380px;
-      max-width:calc(100% - 40px);
-      border-radius:20px;
-      padding:22px;
-      background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
-      box-shadow:var(--shadow);
-      border:1px solid rgba(255,255,255,0.04);
-      backdrop-filter: blur(8px) saturate(120%);
-      overflow:hidden;
-      z-index:10;
-    }
+      .card {
+        position: relative;
+        width: 380px;
+        max-width: calc(100% - 40px);
+        border-radius: 20px;
+        padding: 22px;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.03),
+          rgba(255, 255, 255, 0.02)
+        );
+        box-shadow: var(--shadow);
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        backdrop-filter: blur(8px) saturate(120%);
+        overflow: hidden;
+        z-index: 10;
+      }
 
-    .header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;gap:10px;flex-wrap:wrap;}
-    .title{display:flex;gap:12px;align-items:center}
-    .logo{width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#06b6d4);display:grid;place-items:center;font-weight:800;font-size:20px;color:white;box-shadow:0 6px 20px rgba(124,58,237,0.25);}
-    .h1{font-weight:700;font-family:'Poppins';font-size:18px}
-    .h2{font-size:12px;color:var(--muted)}
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 14px;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .title {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+      .logo {
+        width: 46px;
+        height: 46px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--accent), #06b6d4);
+        display: grid;
+        place-items: center;
+        font-weight: 800;
+        font-size: 20px;
+        color: white;
+        box-shadow: 0 6px 20px rgba(124, 58, 237, 0.25);
+      }
+      .h1 {
+        font-weight: 700;
+        font-family: "Poppins";
+        font-size: 18px;
+      }
+      .h2 {
+        font-size: 12px;
+        color: var(--muted);
+      }
 
-    .display{width:100%;height:86px;border-radius:12px;padding:10px 16px;background:linear-gradient(180deg,var(--glass),var(--glass-2));display:flex;flex-direction:column;justify-content:center;align-items:flex-end;gap:6px;margin-bottom:16px;box-shadow:inset 0 1px 0 rgba(255,255,255,0.02);transition:transform .25s cubic-bezier(.2,.9,.3,1);}
-    .small{font-size:12px;color:var(--muted)}
-    .big{font-weight:700;font-size:28px;line-height:1;color:var(--text)}
+      .display {
+        width: 100%;
+        height: 86px;
+        border-radius: 12px;
+        padding: 10px 16px;
+        background: linear-gradient(180deg, var(--glass), var(--glass-2));
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-end;
+        gap: 6px;
+        margin-bottom: 16px;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
+        transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.3, 1);
+      }
+      .small {
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .big {
+        font-weight: 700;
+        font-size: 28px;
+        line-height: 1;
+        color: var(--text);
+      }
 
-    .pad{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
-    button.key{border:0;padding:14px;border-radius:12px;font-weight:600;font-size:16px;cursor:pointer;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));color:var(--text);box-shadow:0 8px 18px rgba(2,6,23,0.6);transition:transform .12s ease,box-shadow .12s ease;backdrop-filter: blur(6px);}
-    button.key:active{transform:translateY(2px)}
-    button.op{background:linear-gradient(180deg, rgba(124,58,237,0.95), rgba(6,182,212,0.95));color:white;box-shadow:0 12px 30px rgba(124,58,237,0.22)}
-    button.alt{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));color:var(--muted)}
-    button.equals{grid-column:span 2;background:linear-gradient(90deg,#06b6d4,#7c3aed);color:white;font-size:18px}
+      .pad {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+      }
+      button.key {
+        border: 0;
+        padding: 14px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 16px;
+        cursor: pointer;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.02),
+          rgba(255, 255, 255, 0.01)
+        );
+        color: var(--text);
+        box-shadow: 0 8px 18px rgba(2, 6, 23, 0.6);
+        transition: transform 0.12s ease, box-shadow 0.12s ease;
+        backdrop-filter: blur(6px);
+      }
+      button.key:active {
+        transform: translateY(2px);
+      }
+      button.op {
+        background: linear-gradient(
+          180deg,
+          rgba(124, 58, 237, 0.95),
+          rgba(6, 182, 212, 0.95)
+        );
+        color: white;
+        box-shadow: 0 12px 30px rgba(124, 58, 237, 0.22);
+      }
+      button.alt {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.02),
+          rgba(255, 255, 255, 0.01)
+        );
+        color: var(--muted);
+      }
+      button.equals {
+        grid-column: span 2;
+        background: linear-gradient(90deg, #06b6d4, #7c3aed);
+        color: white;
+        font-size: 18px;
+      }
 
-    .sparkle{position:absolute;right:18px;top:10px;font-size:12px;background:linear-gradient(90deg,#fff,rgba(255,255,255,0.5));-webkit-background-clip:text;background-clip:text;color:transparent}
+      .sparkle {
+        position: absolute;
+        right: 18px;
+        top: 10px;
+        font-size: 12px;
+        background: linear-gradient(90deg, #fff, rgba(255, 255, 255, 0.5));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
 
-    /* About Modal animation */
-    #aboutModal {
-  position: fixed;
-  top:0; left:0; width:100%; height:100%;
-  background: rgba(0,0,0,0.6);
-  backdrop-filter: blur(4px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.25s ease;
-  z-index:50;
-}
+      /* About Modal animation */
+      #aboutModal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(4px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s ease;
+        z-index: 50;
+      }
 
-#aboutModal.show {
-  opacity: 1;
-  pointer-events: all;
-}
+      #aboutModal.show {
+        opacity: 1;
+        pointer-events: all;
+      }
 
-.display .big span {
-  display: inline-block;
-  opacity: 0;
-  transform: translateX(20px); /* default slide from right */
-  transition: transform 0.2s ease, opacity 0.2s ease;
-}
+      .display .big span {
+        display: inline-block;
+        opacity: 0;
+        transform: translateX(20px); /* default slide from right */
+        transition: transform 0.2s ease, opacity 0.2s ease;
+      }
 
-.display .big span.animate-left {
-  transform: translateX(-20px); /* slide from left for operators/backspace */
-  opacity: 0;
-}
+      .display .big span.animate-left {
+        transform: translateX(
+          -20px
+        ); /* slide from left for operators/backspace */
+        opacity: 0;
+      }
 
-.display .big span.animate {
-  transform: translateX(0);
-  opacity: 1;
-}
+      .display .big span.animate {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="blob b3"></div>
 
+    <div class="card" id="calc">
+      <div class="header">
+        <div class="title">
+          <div class="logo">C</div>
+          <div>
+            <div class="h1">Calculator</div>
+            <div class="h2">Add · Subtract · × · ÷ · ₹ → $ converter</div>
+          </div>
+        </div>
+        <div class="sparkle">✨</div>
+        <!-- About Button -->
+        <button
+          id="aboutBtn"
+          style="
+            background: linear-gradient(135deg, #7c3aed, #06b6d4);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            padding: 6px 12px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 12px;
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+            transition: transform 0.2s ease;
+          "
+        >
+          About
+        </button>
+      </div>
 
-  </style>
-</head>
-<body>
-  <div class="blob b1"></div>
-  <div class="blob b2"></div>
-  <div class="blob b3"></div>
-
-  <div class="card" id="calc">
-    <div class="header">
-      <div class="title">
-        <div class="logo">C</div>
-        <div>
-          <div class="h1">Calculator</div>
-          <div class="h2">Add · Subtract · × · ÷ · ₹ → $ converter</div>
+      <div
+        id="aboutModal"
+        style="
+          display: none;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.6);
+          backdrop-filter: blur(4px);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 50;
+        "
+      >
+        <div
+          class="modalContent"
+          style="
+            background: linear-gradient(
+              180deg,
+              rgba(255, 255, 255, 0.05),
+              rgba(255, 255, 255, 0.02)
+            );
+            padding: 24px 32px;
+            border-radius: 20px;
+            max-width: 400px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+          "
+        >
+          <h2 style="margin-bottom: 12px">About Me</h2>
+          <p style="font-size: 14px; line-height: 1.5">
+            Hi! I’m Vedant 😎<br />
+            This is my super-pretty Calculator... 💻✨<br />
+            I love coding, making cool UIs, and experimenting with animations!
+            🌈
+          </p>
+          <button
+            id="closeAbout"
+            style="
+              margin-top: 16px;
+              padding: 6px 12px;
+              border-radius: 10px;
+              border: none;
+              background: #7c3aed;
+              color: white;
+              cursor: pointer;
+              font-weight: 600;
+              transition: transform 0.2s ease;
+            "
+          >
+            Close
+          </button>
         </div>
       </div>
-      <div class="sparkle">✨</div>
-      <!-- About Button -->
-      <button id="aboutBtn" style="
-        background: linear-gradient(135deg,#7c3aed,#06b6d4);
-        border: none;
-        border-radius: 10px;
-        color: white;
-        padding: 6px 12px;
-        cursor: pointer;
-        font-weight: 600;
-        font-size: 12px;
-        box-shadow: 0 4px 12px rgba(124,58,237,0.3);
-        transition: transform 0.2s ease;
-      ">About</button>
-    </div>
 
-    <div id="aboutModal" style="
-      display: none;
-      position: fixed;
-      top:0; left:0; width:100%; height:100%;
-      background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(4px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index:50;
-    ">
-      <div class="modalContent" style="
-        background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
-        padding: 24px 32px;
-        border-radius: 20px;
-        max-width: 400px;
-        text-align: center;
-        color: white;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-      ">
-        <h2 style="margin-bottom: 12px;">About Me</h2>
-        <p style="font-size: 14px; line-height: 1.5;">
-          Hi! I’m Vedant 😎<br>
-          This is my super-pretty Calculator... 💻✨<br>
-          I love coding, making cool UIs, and experimenting with animations! 🌈
-        </p>
-        <button id="closeAbout" style="
-          margin-top: 16px;
-          padding: 6px 12px;
-          border-radius: 10px;
-          border: none;
-          background: #7c3aed;
-          color: white;
-          cursor: pointer;
-          font-weight: 600;
-          transition: transform 0.2s ease;
-        ">Close</button>
+      <div class="display" id="display">
+        <div class="small" id="mode">Mode: Calculator</div>
+        <div class="big" id="value">0</div>
+      </div>
+
+      <div class="pad" id="pad">
+        <button class="key alt" data-action="clear">C</button>
+        <button class="key alt" data-action="back">⌫</button>
+        <button class="key alt" data-action="percent">%</button>
+        <button class="key op" data-action="/">÷</button>
+
+        <button class="key" data-num="7">7</button>
+        <button class="key" data-num="8">8</button>
+        <button class="key" data-num="9">9</button>
+        <button class="key op" data-action="*">×</button>
+
+        <button class="key" data-num="4">4</button>
+        <button class="key" data-num="5">5</button>
+        <button class="key" data-num="6">6</button>
+        <!-- ✅ fixed -->
+        <button class="key op" data-action="-">−</button>
+
+        <button class="key" data-num="1">1</button>
+        <button class="key" data-num="2">2</button>
+        <button class="key" data-num="3">3</button>
+        <button class="key op" data-action="+">+</button>
+
+        <button class="key" data-num="0">0</button>
+        <button class="key" data-num=".">.</button>
+        <button class="key" data-action="toggle">₹ → $</button>
+        <button class="key equals" data-action="=">=</button>
       </div>
     </div>
 
-    <div class="display" id="display">
-      <div class="small" id="mode">Mode: Calculator</div>
-      <div class="big" id="value">0</div>
+    <div id="aboutModal">
+      <div class="modalContent">...</div>
     </div>
 
-    <div class="pad" id="pad">
-      <button class="key alt" data-action="clear">C</button>
-      <button class="key alt" data-action="back">⌫</button>
-      <button class="key alt" data-action="percent">%</button>
-      <button class="key op" data-action="/">÷</button>
+    <script>
+      const displayEl = document.getElementById("value");
+      const pad = document.getElementById("pad");
+      const modeEl = document.getElementById("mode");
+      let showingRupee = true;
+      let INR_TO_USD = 0.01138;
+      let state = { display: "0" };
+      let lastInput = "digit"; // track last input for animation direction
 
-      <button class="key" data-num="7">7</button>
-      <button class="key" data-num="8">8</button>
-      <button class="key" data-num="9">9</button>
-      <button class="key op" data-action="*">×</button>
+      function updateDisplay() {
+        const value = state.display;
+        displayEl.innerHTML = ""; // clear current display
+        const fromLeft = lastInput === "op"; // operators/backspace slide from left
+        for (let i = 0; i < value.length; i++) {
+          const span = document.createElement("span");
+          span.textContent = value[i];
+          if (fromLeft) span.classList.add("animate-left");
+          displayEl.appendChild(span);
+          setTimeout(() => span.classList.add("animate"), i * 30); // stagger animation
+        }
+      }
 
-      <button class="key" data-num="4">4</button>
-      <button class="key" data-num="5">5</button>
-      <button class="key" data-num="6">6</button> <!-- ✅ fixed -->
-      <button class="key op" data-action="-">−</button>
+      function inputDigit(d) {
+        lastInput = "digit";
+        if (state.display === "0" && d !== ".") state.display = d;
+        else if (state.display.includes(".") && d === ".") return;
+        else state.display += d;
+        updateDisplay();
+      }
 
-      <button class="key" data-num="1">1</button>
-      <button class="key" data-num="2">2</button>
-      <button class="key" data-num="3">3</button>
-      <button class="key op" data-action="+">+</button>
+      function handleOperator(op) {
+        lastInput = "op";
+        if (op === "percent") {
+          state.display = (parseFloat(state.display) / 100).toString();
+          updateDisplay();
+          return;
+        }
+        if (op === "clear") {
+          state.display = "0";
+          updateDisplay();
+          return;
+        }
+        if (op === "back") {
+          if (state.display.length === 1) state.display = "0";
+          else state.display = state.display.slice(0, -1);
+          updateDisplay();
+          return;
+        }
+        if (op === "toggle") {
+          showingRupee = !showingRupee;
+          modeEl.textContent = showingRupee
+            ? "Mode: Calculator"
+            : "Mode: Converter (₹ → $)";
+          return;
+        }
+        if (op === "=") {
+          try {
+            const result = evaluateExpression(state.display);
+            state.display = String(Math.round(result * 10000) / 10000);
+          } catch (e) {
+            state.display = "Error";
+          }
+          updateDisplay();
+          return;
+        }
+        const last = state.display[state.display.length - 1];
+        if (["+", "-", "*", "/"].includes(last)) {
+          state.display = state.display.slice(0, -1) + op;
+        } else state.display += op;
+        updateDisplay();
+      }
 
-      <button class="key" data-num="0">0</button>
-      <button class="key" data-num=".">.</button>
-      <button class="key" data-action="toggle">₹ → $</button>
-      <button class="key equals" data-action="=">=</button>
-    </div>
-  </div>
+      function evaluateExpression(expr) {
+        const simple = /^\s*[-+]?[0-9]*\.?[0-9]+\s*$/;
+        if (!showingRupee && simple.test(expr))
+          return parseFloat(expr) * INR_TO_USD;
+        expr = expr.replace(/×/g, "*").replace(/÷/g, "/");
+        if (!/^[-+/*\d(). %]+$/.test(expr)) throw new Error("Invalid");
+        expr = expr.replace(/(\d+(?:\.\d+)?)%/g, "(($1)/100)");
+        return Function("return (" + expr + ")")();
+      }
 
-<script>
-const displayEl = document.getElementById('value');
-const pad = document.getElementById('pad');
-const modeEl = document.getElementById('mode');
-let showingRupee = true;
-let INR_TO_USD = 0.01138;
-let state = {display:'0'};
-let lastInput = 'digit'; // track last input for animation direction
+      pad.addEventListener("click", (e) => {
+        const b = e.target.closest("button");
+        if (!b) return;
+        const n = b.dataset.num;
+        const a = b.dataset.action;
+        if (n !== undefined) inputDigit(n);
+        else if (a) handleOperator(a);
+      });
 
-function updateDisplay(){
-  const value = state.display;
-  displayEl.innerHTML = ''; // clear current display
-  const fromLeft = lastInput === 'op'; // operators/backspace slide from left
-  for(let i=0;i<value.length;i++){
-    const span = document.createElement('span');
-    span.textContent = value[i];
-    if(fromLeft) span.classList.add('animate-left');
-    displayEl.appendChild(span);
-    setTimeout(() => span.classList.add('animate'), i*30); // stagger animation
-  }
-}
+      window.addEventListener("keydown", (e) => {
+        if ((e.key >= "0" && e.key <= "9") || e.key === ".") {
+          inputDigit(e.key);
+        } else if (e.key === "Enter" || e.key === "=") {
+          handleOperator("=");
+        } else if (e.key === "Backspace") {
+          handleOperator("back");
+        } else if (e.key === "Escape") {
+          handleOperator("clear");
+        } else if (["+", "-", "*", "/"].includes(e.key)) {
+          handleOperator(e.key);
+        }
+      });
 
-function inputDigit(d){
-  lastInput = 'digit';
-  if(state.display==='0' && d!=='.') state.display = d;
-  else if(state.display.includes('.') && d==='.') return;
-  else state.display += d;
-  updateDisplay();
-}
+      updateDisplay();
 
-function handleOperator(op){
-  lastInput = 'op';
-  if(op==='percent'){state.display=(parseFloat(state.display)/100).toString();updateDisplay();return;}
-  if(op==='clear'){state.display='0';updateDisplay();return;}
-  if(op==='back'){if(state.display.length===1)state.display='0';else state.display=state.display.slice(0,-1);updateDisplay();return;}
-  if(op==='toggle'){showingRupee=!showingRupee;modeEl.textContent=showingRupee?'Mode: Calculator':'Mode: Converter (₹ → $)';return;}
-  if(op==='='){try{const result=evaluateExpression(state.display);state.display=String(Math.round(result*10000)/10000);}catch(e){state.display='Error';}updateDisplay();return;}
-  const last=state.display[state.display.length-1];
-  if(['+','-','*','/'].includes(last)){state.display=state.display.slice(0,-1)+op;}
-  else state.display+=op;
-  updateDisplay();
-}
+      // About modal logic
+      const aboutBtn = document.getElementById("aboutBtn");
+      const aboutModal = document.getElementById("aboutModal");
+      const closeAbout = document.getElementById("closeAbout");
 
-function evaluateExpression(expr){
-  const simple=/^\s*[-+]?[0-9]*\.?[0-9]+\s*$/;
-  if(!showingRupee && simple.test(expr)) return parseFloat(expr)*INR_TO_USD;
-  expr=expr.replace(/×/g,'*').replace(/÷/g,'/');
-  if(!/^[-+/*\d(). %]+$/.test(expr)) throw new Error('Invalid');
-  expr=expr.replace(/(\d+(?:\.\d+)?)%/g,'(($1)/100)');
-  return Function('return ('+expr+')')();
-}
+      aboutBtn.addEventListener("click", () => {
+        aboutModal.classList.add("show");
+      });
 
-pad.addEventListener('click', e=>{
-  const b=e.target.closest('button');
-  if(!b) return;
-  const n=b.dataset.num;
-  const a=b.dataset.action;
-  if(n!==undefined) inputDigit(n);
-  else if(a) handleOperator(a);
-});
+      closeAbout.addEventListener("click", () => {
+        aboutModal.classList.remove("show");
+      });
 
-window.addEventListener('keydown', e=>{
-  if((e.key>='0' && e.key<='9') || e.key==='.'){ inputDigit(e.key); }
-  else if(e.key==='Enter' || e.key==='='){ handleOperator('='); }
-  else if(e.key==='Backspace'){ handleOperator('back'); }
-  else if(e.key==='Escape'){ handleOperator('clear'); }
-  else if(['+','-','*','/'].includes(e.key)){ handleOperator(e.key); }
-});
-
-updateDisplay();
-</script>
-
-
-</body>
+      // Optional: close modal when clicking outside content
+      aboutModal.addEventListener("click", (e) => {
+        if (e.target === aboutModal) aboutModal.classList.remove("show");
+      });
+    </script>
+  </body>
 </html>
