@@ -1,430 +1,513 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
-  <title>✨Calculator</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Poppins:wght@400;700&display=swap" rel="stylesheet" />
-  <meta name="theme-color" content="#0f172a" />
+  <head>
+    
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,maximum-scale=1"
+    />
+    <title>✨Calculator</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Poppins:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <meta name="theme-color" content="#0f172a" />
 
-  <style>
-    :root {
-      --bg1: #0f172a;
-      --bg2: #0b1220;
-      --accent: #7c3aed;
-      --glass: rgba(255, 255, 255, 0.06);
-      --glass-2: rgba(255, 255, 255, 0.03);
-      --text: #e6eef8;
-      --muted: rgba(230, 238, 248, 0.6);
-      --shadow: 0 10px 30px rgba(12, 10, 30, 0.6);
-      --rate: 0.01138;
-    }
+    
 
-    * {
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    html, body {
-      height: 100%;
-      margin: 0;
-      font-family: "Inter", system-ui, sans-serif;
-      background: linear-gradient(180deg, var(--bg1), var(--bg2));
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 30px;
-      overflow: hidden;
-    }
-
-    /* Background blobs (optimized for performance) */
-    .blob {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(40px);
-      opacity: 0.3;
-      mix-blend-mode: screen;
-      will-change: transform;
-      animation: moveBlob 20s ease-in-out infinite alternate;
-    }
-
-    .blob.b1 {
-      width: 400px;
-      height: 400px;
-      top: 0;
-      left: 0;
-      background: linear-gradient(135deg, #0bc9d6, #06b6d4);
-    }
-    .blob.b2 {
-      width: 300px;
-      height: 300px;
-      bottom: 0;
-      right: 0;
-      background: linear-gradient(135deg, #06b6d4, #0bc9d6);
-    }
-    .blob.b3 {
-      width: 250px;
-      height: 250px;
-      left: 30%;
-      bottom: 10%;
-      background: linear-gradient(135deg, #10b981, #3b82f6);
-    }
-
-    @keyframes moveBlob {
-      0% { transform: translate(0, 0) scale(1); }
-      50% { transform: translate(40px, -20px) scale(1.1); }
-      100% { transform: translate(-30px, 30px) scale(1); }
-    }
-
-    /* Disable blobs on mobile to save battery */
-    @media (max-width: 768px) {
-      .blob {
-        animation: none;
-        filter: blur(25px);
+    <style>
+      :root {
+        --bg1: #0f172a;
+        --bg2: #0b1220;
+        --accent: #7c3aed;
+        --glass: rgba(255, 255, 255, 0.06);
+        --glass-2: rgba(255, 255, 255, 0.03);
+        --text: #e6eef8;
+        --muted: rgba(230, 238, 248, 0.6);
+        --shadow: 0 10px 30px rgba(12, 10, 30, 0.6);
+        --rate: 0.01138;
       }
-    }
 
-    .card {
-      position: relative;
-      width: 380px;
-      max-width: calc(100% - 40px);
-      border-radius: 20px;
-      padding: 22px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
-      box-shadow: var(--shadow);
-      border: 1px solid rgba(255,255,255,0.05);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-      overflow: hidden;
-      z-index: 10;
-      will-change: transform, opacity;
-      transition: transform 0.2s ease;
-    }
+      * {
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+      }
 
-    .card:active {
-      transform: scale(0.99);
-    }
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        font-family: "Inter", system-ui, sans-serif;
+        background: linear-gradient(180deg, var(--bg1), var(--bg2));
+        color: var(--text);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 30px;
+        overflow: hidden;
+      }
 
-    .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 14px;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
+      /* Background blobs (optimized for performance) */
+      .blob {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(40px);
+        opacity: 0.3;
+        mix-blend-mode: screen;
+        will-change: transform;
+        animation: moveBlob 20s ease-in-out infinite alternate;
+      }
 
-    .title {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-    }
+      .blob.b1 {
+        width: 400px;
+        height: 400px;
+        top: 0;
+        left: 0;
+        background: linear-gradient(135deg, #0bc9d6, #06b6d4);
+      }
+      .blob.b2 {
+        width: 300px;
+        height: 300px;
+        bottom: 0;
+        right: 0;
+        background: linear-gradient(135deg, #06b6d4, #0bc9d6);
+      }
+      .blob.b3 {
+        width: 250px;
+        height: 250px;
+        left: 30%;
+        bottom: 10%;
+        background: linear-gradient(135deg, #10b981, #3b82f6);
+      }
 
-    .logo {
-      width: 46px;
-      height: 46px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, var(--accent), #06b6d4);
-      display: grid;
-      place-items: center;
-      font-weight: 800;
-      font-size: 20px;
-      color: white;
-      box-shadow: 0 6px 20px rgba(124, 58, 237, 0.25);
-    }
+      @keyframes moveBlob {
+        0% {
+          transform: translate(0, 0) scale(1);
+        }
+        50% {
+          transform: translate(40px, -20px) scale(1.1);
+        }
+        100% {
+          transform: translate(-30px, 30px) scale(1);
+        }
+      }
 
-    .h1 {
-      font-weight: 700;
-      font-family: "Poppins";
-      font-size: 18px;
-    }
-    .h2 {
-      font-size: 12px;
-      color: var(--muted);
-    }
+      /* Disable blobs on mobile to save battery */
+      @media (max-width: 768px) {
+        .blob {
+          animation: none;
+          filter: blur(25px);
+        }
+      }
 
-    .display {
-      width: 100%;
-      height: 86px;
-      border-radius: 12px;
-      padding: 10px 16px;
-      background: linear-gradient(180deg, var(--glass), var(--glass-2));
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: flex-end;
-      gap: 6px;
-      margin-bottom: 16px;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
-      transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.3, 1);
-      will-change: transform;
-    }
+      .card {
+        position: relative;
+        width: 380px;
+        max-width: calc(100% - 40px);
+        border-radius: 20px;
+        padding: 22px;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.05),
+          rgba(255, 255, 255, 0.02)
+        );
+        box-shadow: var(--shadow);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        overflow: hidden;
+        z-index: 10;
+        will-change: transform, opacity;
+        transition: transform 0.2s ease;
+      }
 
-    .small { font-size: 12px; color: var(--muted); }
-    .big { font-weight: 700; font-size: 28px; color: var(--text); word-wrap: break-word; }
+      .card:active {
+        transform: scale(0.99);
+      }
 
-    .pad {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-    }
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 14px;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
 
-    button.key {
-      border: none;
-      padding: 14px;
-      border-radius: 12px;
-      font-weight: 600;
-      font-size: 16px;
-      cursor: pointer;
-      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-      color: var(--text);
-      box-shadow: 0 6px 14px rgba(2, 6, 23, 0.5);
-      backdrop-filter: blur(4px);
-      transition: transform 0.12s ease, box-shadow 0.12s ease;
-      will-change: transform;
-    }
+      .title {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
 
-    button.key:active { transform: translateY(2px); }
+      .logo {
+        width: 46px;
+        height: 46px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--accent), #06b6d4);
+        display: grid;
+        place-items: center;
+        box-shadow: 0 6px 20px rgba(124, 58, 237, 0.25);
+      }
 
-    button.op {
-      background: linear-gradient(180deg, rgba(124,58,237,0.95), rgba(6,182,212,0.95));
-      color: white;
-      box-shadow: 0 10px 25px rgba(124,58,237,0.25);
-    }
+      .logo img {
+        width: 44px;
+        height: 44px;
+        object-fit: contain;
+        filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.6));
+      }
 
-    button.alt {
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      color: var(--muted);
-    }
+      .h1 {
+        font-weight: 700;
+        font-family: "Poppins";
+        font-size: 18px;
+      }
+      .h2 {
+        font-size: 12px;
+        color: var(--muted);
+      }
 
-    button.equals {
-      grid-column: span 2;
-      background: linear-gradient(90deg, #06b6d4, #7c3aed);
-      color: white;
-      font-size: 18px;
-    }
+      .display {
+        width: 100%;
+        height: 86px;
+        border-radius: 12px;
+        padding: 10px 16px;
+        background: linear-gradient(180deg, var(--glass), var(--glass-2));
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-end;
+        gap: 6px;
+        margin-bottom: 16px;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
+        transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.3, 1);
+        will-change: transform;
+      }
 
-    #aboutBtn {
-      background: linear-gradient(135deg, #7c3aed, #06b6d4);
-      border: none;
-      border-radius: 10px;
-      color: white;
-      padding: 6px 12px;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 12px;
-      box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
-      transition: transform 0.2s ease;
-    }
+      .small {
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .big {
+        font-weight: 700;
+        font-size: 28px;
+        color: var(--text);
+        word-wrap: break-word;
+      }
 
-    #aboutBtn:active { transform: scale(0.95); }
+      .pad {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+      }
 
-    #aboutModal {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.7);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.25s ease;
-      z-index: 50;
-    }
-
-    #aboutModal.show {
-      opacity: 1;
-      pointer-events: all;
-    }
-
-    .modalContent {
-      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
-      padding: 24px 32px;
-      border-radius: 20px;
-      text-align: center;
-      color: white;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-      max-width: 340px;
-      animation: popIn 0.3s ease;
-    }
-
-    @keyframes popIn {
-      from { transform: scale(0.8); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-
-    @media (max-width: 500px) {
-      body { padding: 20px; }
-      .big { font-size: 24px; }
-      button.key { padding: 12px; font-size: 15px; }
-    }
-  </style>
-</head>
-
-<body>
-  <div class="blob b1"></div>
-  <div class="blob b2"></div>
-  <div class="blob b3"></div>
-
-  <div class="card" id="calc">
-    <div class="header">
-      <div class="title">
-        <div class="logo">C</div>
-        <div>
-          <div class="h1">Calculator</div>
-          <div class="h2">Add · Subtract · × · ÷ · ₹ → $ converter</div>
-        </div>
-      </div>
-      <button id="aboutBtn">About</button>
-    </div>
-
-    <div class="display" id="display">
-      <div class="small" id="mode">Mode: Calculator</div>
-      <div class="big" id="value">0</div>
-    </div>
-
-    <div class="pad" id="pad">
-      <button class="key alt" data-action="clear">C</button>
-      <button class="key alt" data-action="back">⌫</button>
-      <button class="key alt" data-action="percent">%</button>
-      <button class="key op" data-action="/">÷</button>
-      <button class="key" data-num="7">7</button>
-      <button class="key" data-num="8">8</button>
-      <button class="key" data-num="9">9</button>
-      <button class="key op" data-action="*">×</button>
-      <button class="key" data-num="4">4</button>
-      <button class="key" data-num="5">5</button>
-      <button class="key" data-num="6">6</button>
-      <button class="key op" data-action="-">−</button>
-      <button class="key" data-num="1">1</button>
-      <button class="key" data-num="2">2</button>
-      <button class="key" data-num="3">3</button>
-      <button class="key op" data-action="+">+</button>
-      <button class="key" data-num="0">0</button>
-      <button class="key" data-num=".">.</button>
-      <button class="key" data-action="toggle">₹ → $</button>
-      <button class="key equals" data-action="=">=</button>
-    </div>
-  </div>
-
-  <div id="aboutModal">
-    <div class="modalContent">
-      <h2 style="margin-bottom: 12px;">About Me</h2>
-      <p style="font-size: 14px; line-height: 1.5">
-        Hi! I’m Vedant 😎<br>
-        This is my super-pretty Calculator... 💻✨<br>
-        I love coding, making cool UIs, and experimenting with animations! 🌈
-      </p>
-      <button id="closeAbout" style="
-        margin-top: 16px;
-        padding: 6px 12px;
-        border-radius: 10px;
+      button.key {
         border: none;
-        background: #7c3aed;
+        padding: 14px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 16px;
+        cursor: pointer;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.03),
+          rgba(255, 255, 255, 0.01)
+        );
+        color: var(--text);
+        box-shadow: 0 6px 14px rgba(2, 6, 23, 0.5);
+        backdrop-filter: blur(4px);
+        transition: transform 0.12s ease, box-shadow 0.12s ease;
+        will-change: transform;
+      }
+
+      button.key:active {
+        transform: translateY(2px);
+      }
+
+      button.op {
+        background: linear-gradient(
+          180deg,
+          rgba(124, 58, 237, 0.95),
+          rgba(6, 182, 212, 0.95)
+        );
         color: white;
+        box-shadow: 0 10px 25px rgba(124, 58, 237, 0.25);
+      }
+
+      button.alt {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.02),
+          rgba(255, 255, 255, 0.01)
+        );
+        color: var(--muted);
+      }
+
+      button.equals {
+        grid-column: span 2;
+        background: linear-gradient(90deg, #06b6d4, #7c3aed);
+        color: white;
+        font-size: 18px;
+      }
+
+      #aboutBtn {
+        background: linear-gradient(135deg, #7c3aed, #06b6d4);
+        border: none;
+        border-radius: 10px;
+        color: white;
+        padding: 6px 12px;
         cursor: pointer;
         font-weight: 600;
+        font-size: 12px;
+        box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
         transition: transform 0.2s ease;
-      ">Close</button>
-    </div>
-  </div>
-
-  <script>
-    const displayEl = document.getElementById("value");
-    const pad = document.getElementById("pad");
-    const modeEl = document.getElementById("mode");
-    let showingRupee = true;
-    let INR_TO_USD = 0.01138;
-    let state = { display: "0" };
-
-    function updateDisplay() {
-      displayEl.textContent = state.display;
-    }
-
-    function inputDigit(d) {
-      if (state.display === "0" && d !== ".") state.display = d;
-      else if (state.display.includes(".") && d === ".") return;
-      else state.display += d;
-      updateDisplay();
-    }
-
-    function handleOperator(op) {
-      if (op === "percent") {
-        state.display = (parseFloat(state.display) / 100).toString();
-        updateDisplay(); return;
       }
-      if (op === "clear") {
-        state.display = "0"; updateDisplay(); return;
+
+      #aboutBtn:active {
+        transform: scale(0.95);
       }
-      if (op === "back") {
-        if (state.display.length === 1) state.display = "0";
-        else state.display = state.display.slice(0, -1);
-        updateDisplay(); return;
+
+      #aboutModal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s ease;
+        z-index: 50;
       }
-      if (op === "toggle") {
-        showingRupee = !showingRupee;
-        modeEl.textContent = showingRupee
-          ? "Mode: Calculator"
-          : "Mode: Converter (₹ → $)";
-        return;
+
+      #aboutModal.show {
+        opacity: 1;
+        pointer-events: all;
       }
-      if (op === "=") {
-        try {
-          const result = evaluateExpression(state.display);
-          state.display = String(Math.round(result * 10000) / 10000);
-        } catch (e) {
-          state.display = "Error";
+
+      .modalContent {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.06),
+          rgba(255, 255, 255, 0.02)
+        );
+        padding: 24px 32px;
+        border-radius: 20px;
+        text-align: center;
+        color: white;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        max-width: 340px;
+        animation: popIn 0.3s ease;
+      }
+
+      @keyframes popIn {
+        from {
+          transform: scale(0.8);
+          opacity: 0;
         }
-        updateDisplay();
-        return;
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
       }
-      const last = state.display[state.display.length - 1];
-      if (["+", "-", "*", "/"].includes(last)) {
-        state.display = state.display.slice(0, -1) + op;
-      } else state.display += op;
+
+      @media (max-width: 500px) {
+        body {
+          padding: 20px;
+        }
+        .big {
+          font-size: 24px;
+        }
+        button.key {
+          padding: 12px;
+          font-size: 15px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="blob b3"></div>
+
+    <div class="card" id="calc">
+      <div class="header">
+        <div class="title">
+          <div class="logo">
+            <img src="icons8-calculator-240.png" alt="Calculator Logo" />
+          </div>
+
+          <div>
+            <div class="h1">Calculator</div>
+            <div class="h2">Add · Subtract · × · ÷ · ₹ → $ converter</div>
+          </div>
+        </div>
+        <button id="aboutBtn">About</button>
+      </div>
+
+      <div class="display" id="display">
+        <div class="small" id="mode">Mode: Calculator</div>
+        <div class="big" id="value">0</div>
+      </div>
+
+      <div class="pad" id="pad">
+        <button class="key alt" data-action="clear">C</button>
+        <button class="key alt" data-action="back">⌫</button>
+        <button class="key alt" data-action="percent">%</button>
+        <button class="key op" data-action="/">÷</button>
+        <button class="key" data-num="7">7</button>
+        <button class="key" data-num="8">8</button>
+        <button class="key" data-num="9">9</button>
+        <button class="key op" data-action="*">×</button>
+        <button class="key" data-num="4">4</button>
+        <button class="key" data-num="5">5</button>
+        <button class="key" data-num="6">6</button>
+        <button class="key op" data-action="-">−</button>
+        <button class="key" data-num="1">1</button>
+        <button class="key" data-num="2">2</button>
+        <button class="key" data-num="3">3</button>
+        <button class="key op" data-action="+">+</button>
+        <button class="key" data-num="0">0</button>
+        <button class="key" data-num=".">.</button>
+        <button class="key" data-action="toggle">₹ → $</button>
+        <button class="key equals" data-action="=">=</button>
+      </div>
+    </div>
+
+    <div id="aboutModal">
+      <div class="modalContent">
+        <h2 style="margin-bottom: 12px">About Me</h2>
+        <p style="font-size: 14px; line-height: 1.5">
+          Hi! I’m Vedant 😎<br />
+          This is my super-pretty Calculator... 💻✨<br />
+          I love coding, making cool UIs, and experimenting with animations! 🌈
+        </p>
+        <button
+          id="closeAbout"
+          style="
+            margin-top: 16px;
+            padding: 6px 12px;
+            border-radius: 10px;
+            border: none;
+            background: #7c3aed;
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.2s ease;
+          "
+        >
+          Close
+        </button>
+      </div>
+    </div>
+
+    <script>
+      const displayEl = document.getElementById("value");
+      const pad = document.getElementById("pad");
+      const modeEl = document.getElementById("mode");
+      let showingRupee = true;
+      let INR_TO_USD = 0.01138;
+      let state = { display: "0" };
+
+      function updateDisplay() {
+        displayEl.textContent = state.display;
+      }
+
+      function inputDigit(d) {
+        if (state.display === "0" && d !== ".") state.display = d;
+        else if (state.display.includes(".") && d === ".") return;
+        else state.display += d;
+        updateDisplay();
+      }
+
+      function handleOperator(op) {
+        if (op === "percent") {
+          state.display = (parseFloat(state.display) / 100).toString();
+          updateDisplay();
+          return;
+        }
+        if (op === "clear") {
+          state.display = "0";
+          updateDisplay();
+          return;
+        }
+        if (op === "back") {
+          if (state.display.length === 1) state.display = "0";
+          else state.display = state.display.slice(0, -1);
+          updateDisplay();
+          return;
+        }
+        if (op === "toggle") {
+          showingRupee = !showingRupee;
+          modeEl.textContent = showingRupee
+            ? "Mode: Calculator"
+            : "Mode: Converter (₹ → $)";
+          return;
+        }
+        if (op === "=") {
+          try {
+            const result = evaluateExpression(state.display);
+            state.display = String(Math.round(result * 10000) / 10000);
+          } catch (e) {
+            state.display = "Error";
+          }
+          updateDisplay();
+          return;
+        }
+        const last = state.display[state.display.length - 1];
+        if (["+", "-", "*", "/"].includes(last)) {
+          state.display = state.display.slice(0, -1) + op;
+        } else state.display += op;
+        updateDisplay();
+      }
+
+      function evaluateExpression(expr) {
+        const simple = /^\s*[-+]?[0-9]*\.?[0-9]+\s*$/;
+        if (!showingRupee && simple.test(expr))
+          return parseFloat(expr) * INR_TO_USD;
+        expr = expr.replace(/×/g, "*").replace(/÷/g, "/");
+        if (!/^[-+/*\d(). %]+$/.test(expr)) throw new Error("Invalid");
+        expr = expr.replace(/(\d+(?:\.\d+)?)%/g, "(($1)/100)");
+        return Function("return (" + expr + ")")();
+      }
+
+      pad.addEventListener("click", (e) => {
+        const b = e.target.closest("button");
+        if (!b) return;
+        const n = b.dataset.num;
+        const a = b.dataset.action;
+        if (n !== undefined) inputDigit(n);
+        else if (a) handleOperator(a);
+      });
+
+      window.addEventListener("keydown", (e) => {
+        if ((e.key >= "0" && e.key <= "9") || e.key === ".") inputDigit(e.key);
+        else if (e.key === "Enter" || e.key === "=") handleOperator("=");
+        else if (e.key === "Backspace") handleOperator("back");
+        else if (e.key === "Escape") handleOperator("clear");
+        else if (["+", "-", "*", "/"].includes(e.key)) handleOperator(e.key);
+      });
+
       updateDisplay();
-    }
 
-    function evaluateExpression(expr) {
-      const simple = /^\s*[-+]?[0-9]*\.?[0-9]+\s*$/;
-      if (!showingRupee && simple.test(expr))
-        return parseFloat(expr) * INR_TO_USD;
-      expr = expr.replace(/×/g, "*").replace(/÷/g, "/");
-      if (!/^[-+/*\d(). %]+$/.test(expr)) throw new Error("Invalid");
-      expr = expr.replace(/(\d+(?:\.\d+)?)%/g, "(($1)/100)");
-      return Function("return (" + expr + ")")();
-    }
+      const aboutBtn = document.getElementById("aboutBtn");
+      const aboutModal = document.getElementById("aboutModal");
+      const closeAbout = document.getElementById("closeAbout");
 
-    pad.addEventListener("click", (e) => {
-      const b = e.target.closest("button");
-      if (!b) return;
-      const n = b.dataset.num;
-      const a = b.dataset.action;
-      if (n !== undefined) inputDigit(n);
-      else if (a) handleOperator(a);
-    });
-
-    window.addEventListener("keydown", (e) => {
-      if ((e.key >= "0" && e.key <= "9") || e.key === ".") inputDigit(e.key);
-      else if (e.key === "Enter" || e.key === "=") handleOperator("=");
-      else if (e.key === "Backspace") handleOperator("back");
-      else if (e.key === "Escape") handleOperator("clear");
-      else if (["+", "-", "*", "/"].includes(e.key)) handleOperator(e.key);
-    });
-
-    updateDisplay();
-
-    const aboutBtn = document.getElementById("aboutBtn");
-    const aboutModal = document.getElementById("aboutModal");
-    const closeAbout = document.getElementById("closeAbout");
-
-    aboutBtn.addEventListener("click", () => aboutModal.classList.add("show"));
-    closeAbout.addEventListener("click", () => aboutModal.classList.remove("show"));
-    aboutModal.addEventListener("click", (e) => {
-      if (e.target === aboutModal) aboutModal.classList.remove("show");
-    });
-  </script>
-</body>
+      aboutBtn.addEventListener("click", () =>
+        aboutModal.classList.add("show")
+      );
+      closeAbout.addEventListener("click", () =>
+        aboutModal.classList.remove("show")
+      );
+      aboutModal.addEventListener("click", (e) => {
+        if (e.target === aboutModal) aboutModal.classList.remove("show");
+      });
+    </script>
+  </body>
 </html>
