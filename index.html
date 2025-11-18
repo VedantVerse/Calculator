@@ -36,7 +36,7 @@
         height: 100%;
         margin: 0;
         font-family: "Poppins", sans-serif;
-        background: linear-gradient(180deg, var(--bg1), var(--bg2));
+        background: transparent;
         color: var(--text);
         display: flex;
         align-items: center;
@@ -82,18 +82,13 @@
         max-width: calc(100% - 40px);
         border-radius: 20px;
         padding: 22px;
-        background: linear-gradient(
-          180deg,
-          rgba(255, 255, 255, 0.05),
-          rgba(255, 255, 255, 0.02)
-        );
+        background: rgba(10, 10, 15, 0.85); /* ✨ solid dark glass */
         box-shadow: var(--shadow);
         border: 1px solid rgba(255, 255, 255, 0.05);
-        backdrop-filter: blur(6px);
-        -webkit-backdrop-filter: blur(6px);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
         overflow: hidden;
         z-index: 10;
-        will-change: transform, opacity;
         transition: transform 0.2s ease;
       }
 
@@ -133,39 +128,19 @@
       }
 
       .h1 {
-        font-weight: 700;
-        font-family: "Poppins", sans-serif;
-        font-size: 20px; /* a bit smaller for mobile */
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        padding: 8px 15px;
+        border-radius: 30px;
+        color: #fff;
+        cursor: text;
+        text-decoration: none;
+        transition: all 0.4s ease;
+        font-weight: 500;
 
-        background: linear-gradient(
-          270deg,
-          #ff3cac,
-          #ffffff,
-          #00f5a0,
-          #f54d4d,
-          #f0f0f0
-        );
-        background-size: 1000% 1000%;
-
-        /* Compatibility */
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-        color: transparent;
-
-        animation: rainbowFlow 15s ease infinite; /* slower */
-      }
-
-      @keyframes rainbowFlow {
-        0% {
-          background-position: 0% 50%;
-        }
-        50% {
-          background-position: 100% 50%;
-        }
-        100% {
-          background-position: 0% 50%;
-        }
+        margin-top: 0;
+        display: flex;
+        align-items: center;
       }
 
       .h2 {
@@ -214,11 +189,8 @@
         font-weight: 600;
         font-size: 16px;
         cursor: pointer;
-        background: linear-gradient(
-          180deg,
-          rgba(255, 255, 255, 0.03),
-          rgba(255, 255, 255, 0.01)
-        );
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
         color: var(--text);
         box-shadow: 0 6px 14px rgba(2, 6, 23, 0.5);
         backdrop-filter: blur(4px);
@@ -330,10 +302,96 @@
           font-size: 15px;
         }
       }
+
+      .liquid-bg {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        filter: url(#turb);
+        z-index: -2;
+        background: transparent;
+      }
+
+      .fluid-layer {
+        position: fixed;
+        inset: 0;
+        background: radial-gradient(circle at 20% 30%, #6a5af9, transparent 50%),
+          radial-gradient(circle at 80% 70%, #00eaff, transparent 50%),
+          radial-gradient(circle at 50% 50%, #ff5edb, transparent 50%);
+        background-size: 200% 200%;
+        animation: colorFlow 10s ease-in-out infinite alternate;
+        z-index: -3;
+      }
+
+      @keyframes colorFlow {
+        0% {
+          background-position: 10% 10%;
+          filter: hue-rotate(0deg);
+        }
+        50% {
+          background-position: 80% 90%;
+          filter: hue-rotate(120deg);
+        }
+        100% {
+          background-position: 20% 70%;
+          filter: hue-rotate(360deg);
+        }
+      }
+
+      [bio-link] {
+        position: absolute;
+        top: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        padding: 8px 15px;
+        border-radius: 30px;
+        color: #fff;
+        cursor: pointer;
+        text-decoration: none;
+
+        display: flex;
+        align-items: center;
+
+        font-weight: 500;
+        transition: all 0.4s ease;
+
+        z-index: 20;
+      }
+
+      [bio-link]:hover {
+        background: rgba(255, 255, 255, 0.15);
+        border-color: rgba(255, 255, 255, 0.3);
+      }
     </style>
   </head>
 
   <body>
+    <a bio-link href="https://vedant-bio.vercel.app/" target="_blank">
+      💜 Meet the Dev
+    </a>
+
+    <svg class="liquid-bg" style="opacity: 0">
+      <filter id="turb">
+        <feTurbulence
+          type="turbulence"
+          baseFrequency="0.005"
+          numOctaves="3"
+          seed="2"
+        >
+          <animate
+            attributeName="baseFrequency"
+            dur="20s"
+            values="0.005;0.002;0.008;0.004;0.006;0.005"
+            repeatCount="indefinite"
+          />
+        </feTurbulence>
+        <feDisplacementMap in="SourceGraphic" scale="60" />
+      </filter>
+    </svg>
+    <div class="fluid-layer"></div>
+
     <div class="blob b1"></div>
     <div class="blob b2"></div>
     <div class="blob b3"></div>
@@ -347,7 +405,6 @@
 
           <div>
             <div class="h1">Calculator</div>
-            <div class="h2">Add · Subtract · × · ÷ · ₹ → $ converter</div>
           </div>
         </div>
         <button id="aboutBtn">About</button>
