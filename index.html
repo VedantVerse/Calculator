@@ -48,12 +48,18 @@
       /* Background blobs (optimized for performance) */
       .blob {
         position: absolute;
+        width: 450px;
+        height: 450px;
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.45),
+          rgba(255, 255, 255, 0)
+        );
         border-radius: 50%;
-        filter: blur(40px);
-        opacity: 0.3;
+        filter: blur(80px);
+        opacity: 0.34;
         mix-blend-mode: screen;
-        will-change: transform;
-        animation: moveBlob 20s ease-in-out infinite alternate;
+        animation: moveBlob 18s ease-in-out infinite alternate;
       }
 
       @keyframes moveBlob {
@@ -80,16 +86,20 @@
         position: relative;
         width: 380px;
         max-width: calc(100% - 40px);
-        border-radius: 20px;
-        padding: 22px;
-        background: rgba(10, 10, 15, 0.85); /* ✨ solid dark glass */
-        box-shadow: var(--shadow);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
+        border-radius: 28px;
+        padding: 24px;
+        background: #243d77;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35),
+          inset 0 0 40px rgba(255, 255, 255, 0.2);
         overflow: hidden;
         z-index: 10;
-        transition: transform 0.2s ease;
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 25px 45px rgba(0, 0, 0, 0.45),
+          inset 0 0 50px rgba(255, 255, 255, 0.25);
       }
 
       .card:active {
@@ -184,22 +194,25 @@
 
       button.key {
         border: none;
-        padding: 14px;
-        border-radius: 12px;
+        padding: 16px;
+        border-radius: 16px;
         font-weight: 600;
-        font-size: 16px;
+        font-size: 17px;
         cursor: pointer;
-        background: rgba(255, 255, 255, 0.08);
-        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: rgba(255, 255, 255, 0.14);
+        border: 1.4px solid rgba(255, 255, 255, 0.23);
         color: var(--text);
-        box-shadow: 0 6px 14px rgba(2, 6, 23, 0.5);
-        backdrop-filter: blur(4px);
-        transition: transform 0.12s ease, box-shadow 0.12s ease;
-        will-change: transform;
+        backdrop-filter: blur(20px) saturate(200%);
+        -webkit-backdrop-filter: blur(20px) saturate(200%);
+        box-shadow: 0 5px 14px rgba(0, 0, 0, 0.4),
+          inset 0 0 25px rgba(255, 255, 255, 0.25);
+        transition: all 0.18s ease;
       }
 
       button.key:active {
-        transform: translateY(2px);
+        transform: scale(0.96);
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4),
+          inset 0 0 40px rgba(255, 255, 255, 0.35);
       }
 
       button.op {
